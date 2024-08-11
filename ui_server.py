@@ -14,9 +14,9 @@ import threading
 # Check if the Firebase app is already initialized
 if not firebase_admin._apps:
     # Initialize Firebase Admin SDK
-    cred = credentials.Certificate('Tech Titans Firebase Service Account.json')
+    cred = credentials.Certificate('path/to/your/serviceAccountKey.json')  # Replace `'path/to/your/serviceAccountKey.json'` with the actual path to the JSON file you downloaded.
     firebase_admin.initialize_app(cred, {
-        'storageBucket': 'tech-titans-329c8.appspot.com'
+        'storageBucket': 'your-bucket-name.appspot.com' # Replace `'your-bucket-name.appspot.com'` with the cloud storage bucket name.
     })
 
 # Initialize Firestore
@@ -31,14 +31,14 @@ def get_groups():
 def upload_file_to_firebase(group, file):
     # Load the service account credentials from the JSON file
     credentials = service_account.Credentials.from_service_account_file(
-        'Tech Titans Firebase Service Account.json'
+        'path/to/your/serviceAccountKey.json'
     )
     
     # Create a Google Cloud Storage client with the credentials
     storage_client = gcs_storage.Client(credentials=credentials, project=credentials.project_id)
     
     # Access the bucket
-    bucket = storage_client.bucket('tech-titans-329c8.appspot.com')
+    bucket = storage_client.bucket('your-bucket-name.appspot.com')
     blob = bucket.blob(f"{group}/{file.name}")
     
     # Upload the file
